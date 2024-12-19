@@ -1,5 +1,6 @@
 package com.leclowndu93150.bouncy_pearls.mixin;
 
+import com.leclowndu93150.bouncy_pearls.PearlConfig;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -17,10 +18,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.UUID;
-
 @Mixin(ThrownEnderpearl.class)
 public abstract class ThrownEnderpearlMixin {
 
@@ -35,6 +32,11 @@ public abstract class ThrownEnderpearlMixin {
 
     @Inject(method = "<init>*", at = @At("RETURN"))
     private void onInit(CallbackInfo ci) {
+        ThrownEnderpearl self = (ThrownEnderpearl) (Object) this;
+
+        if (PearlConfig.getInstance().getCanRide() && self.getOwner() instanceof Player player) {
+            player.startRiding(self, true);
+        }
     }
 
     @Inject(method = "onHit", at = @At("HEAD"), cancellable = true)
@@ -68,9 +70,13 @@ public abstract class ThrownEnderpearlMixin {
                 }
 
                 self.setDeltaMovement(newVelocity);
+
+                if (newVelocity.lengthSqr() <= MIN_VELOCITY * MIN_VELOCITY && self.getFirstPassenger() instanceof Player) {
+                    self.getFirstPassenger().stopRiding();
+                }
+
                 ci.cancel();
             }
         }
     }
-
 }

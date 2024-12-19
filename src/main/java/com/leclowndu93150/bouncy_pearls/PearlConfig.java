@@ -14,6 +14,7 @@ public class PearlConfig {
     private static PearlConfig instance;
 
     private int pearlCooldown = 80;
+    private boolean canRide = true;
 
     public static PearlConfig getInstance() {
         if (instance == null) {
@@ -24,6 +25,10 @@ public class PearlConfig {
 
     public int getPearlCooldown() {
         return pearlCooldown;
+    }
+
+    public boolean getCanRide() {
+        return canRide;
     }
 
     private static PearlConfig loadConfig() {
