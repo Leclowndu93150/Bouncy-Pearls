@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.leclowndu93150.bouncy_pearls.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "refmap": "bouncy_pearls.refmap.json",
+  "mixins": [
+    "EnderPearlItemMixin",
+    "ThrownEnderpearlMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
