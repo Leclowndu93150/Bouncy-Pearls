@@ -15,6 +15,7 @@ public class PearlConfig {
 
     private int pearlCooldown = 80;
     private boolean canRide = true;
+    private boolean waterBounce = true;
 
     public static PearlConfig getInstance() {
         if (instance == null) {
@@ -29,6 +30,10 @@ public class PearlConfig {
 
     public boolean getCanRide() {
         return canRide;
+    }
+
+    public boolean getWaterBounce() {
+        return waterBounce;
     }
 
     private static PearlConfig loadConfig() {
