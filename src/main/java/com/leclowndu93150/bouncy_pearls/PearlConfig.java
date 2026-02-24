@@ -16,6 +16,7 @@ public class PearlConfig {
     private int pearlCooldown = 80;
     private boolean canRide = true;
     private boolean waterBounce = true;
+    private boolean spawnEndermites = true;
 
     public static PearlConfig getInstance() {
         if (instance == null) {
@@ -34,6 +35,10 @@ public class PearlConfig {
 
     public boolean getWaterBounce() {
         return waterBounce;
+    }
+
+    public boolean getSpawnEndermites() {
+        return spawnEndermites;
     }
 
     private static PearlConfig loadConfig() {

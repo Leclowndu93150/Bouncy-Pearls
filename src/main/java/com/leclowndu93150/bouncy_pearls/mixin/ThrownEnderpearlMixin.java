@@ -15,7 +15,9 @@ import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ThrownEnderpearl.class)
@@ -37,6 +39,7 @@ public abstract class ThrownEnderpearlMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void onTick(CallbackInfo ci) {
         ThrownEnderpearl self = (ThrownEnderpearl) (Object) this;
+
         Level level = self.level();
         Vec3 velocity = self.getDeltaMovement();
 
@@ -92,5 +95,10 @@ public abstract class ThrownEnderpearlMixin {
 
             ci.cancel();
         }
+    }
+
+    @ModifyConstant(method = "onHit", constant = @Constant(floatValue = 0.05F))
+    private float preventEndermiteSpawn(float original) {
+        return PearlConfig.getInstance().getSpawnEndermites() ? original : 0f;
     }
 }
